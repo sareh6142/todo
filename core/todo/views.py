@@ -72,7 +72,7 @@ class RegisterPage(FormView):
     template_name = 'todo/register.html'
     form_class = UserCreationForm
     redirect_authenticated_user = True
-    success_url = reverse_lazy('task')
+    success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         user = form.save()

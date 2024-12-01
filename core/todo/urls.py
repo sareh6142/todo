@@ -1,5 +1,5 @@
 from .views import TaskList,TaskDetail,TaskCreate,TaskUpdate,TaskDelete,CustomLoginView,RegisterPage
-from django.urls import path
+from django.urls import path,include
 #from  django.contrib.auth.views import LogoutView
 from . import views
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     #path('logout/', LogoutView.as_view(next_page='login'), name="logout"),
     path('logout/', views.logout_view , name ='logout'),
     path('register/', RegisterPage.as_view(), name="register"),
+    path('api/v1',include('todo.api.v1.urls'))
 
     
     
