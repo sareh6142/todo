@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'todo',
     'rest_framework',
+    "drf_yasg",
+    "django_filters"
+    
+    
     
 ]
 
@@ -137,5 +141,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # user manager config
 
 
-LOGIN_URL= 'login'
 
+
+LOGIN_URL ='login'
