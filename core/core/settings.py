@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework.authtoken",
     "drf_yasg",
-    "django_filters"
+    "django_filters",
+    "rest_framework_simplejwt",
+
     
     
     
@@ -151,5 +153,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+
     ]
 }

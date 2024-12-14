@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import RegistrationSerializer,CustomAuthTokenSerializer
+from .serializers import RegistrationSerializer,CustomAuthTokenSerializer,CustomTokenObtainPairSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.password_validation import validate_password
@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import Serializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from rest_framework.views import APIView
 
@@ -50,3 +51,7 @@ class CustomDiscardAuthToken(APIView):
     def post(self, request):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+"""class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = """
+

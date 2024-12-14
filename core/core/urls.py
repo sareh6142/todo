@@ -44,7 +44,7 @@ urlpatterns = [
     path('',include("todo.urls")),
     path('accounts/',include("accounts.urls")),
     path('api-auth/',include('rest_framework.urls')),
-        path(
+    path(
         "swagger/output.json",
         schema_view.without_ui(cache_timeout=0),
         name="schema-json",

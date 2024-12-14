@@ -6,6 +6,8 @@ from django.core import exceptions
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import Serializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -89,3 +91,13 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        validated_data = super().validate(attrs)
+        if not self.user.is_verified:
+            raise serializers.ValidationError({"details": "user is not verified"})
+        validated_data["username"] = self.user.username
+        validated_data["user_id"] = self.user.id
+        return validated_data
