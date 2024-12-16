@@ -120,3 +120,20 @@ class ChangePasswordSerialier(serializers.Serializer):
             raise serializers.ValidationError({"new_password": list(e.messages)})
 
         return super().validate(attrs)
+
+
+class ActivationResendSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"detail": "user does not exist"})
+        if user_obj.is_staff:
+            raise serializers.ValidationError(
+                {"detail": "user is already activated "}
+            )
+        attrs["user"] = user_obj
+        return super().validate(attrs)
