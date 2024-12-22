@@ -7,11 +7,14 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import Serializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import smart_str,force_str,smart_bytes,DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
     password1 = serializers.CharField(
         label="Password1",
         style={"input_type": "password1"},
@@ -29,10 +32,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ["username","password1","password2"]
+        fields = ["username","email","password1","password2"]
         
     def validate(self,attrs):
         username = attrs.get("username")
+        email = attrs.get('email')
         password1 = attrs.get("password1")
         password2 = attrs.get("password2")
         if password1 != password2:
@@ -52,6 +56,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return User.objects.create_user(username=validated_data['username'],
+                                        email= validated_data["email"],
                                         password=validated_data['password1'])
         
     
@@ -137,3 +142,34 @@ class ActivationResendSerializer(serializers.Serializer):
             )
         attrs["user"] = user_obj
         return super().validate(attrs)
+    
+"""class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    
+    class Meta:
+        fields = ["email"]
+    
+    def validate(self, attrs):
+        
+        email = attrs["data"].get("email")
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            uidb64=urlsafe_base64_encode(user.id)
+            token = PasswordResetTokenGenerator().make_token(user)
+          
+                
+        return super().validate(attrs)"""
+        
+
+
+class ResetPasswordRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    
+class ResetPasswordSerializer(serializers.Serializer):
+    new_password = serializers.RegexField(
+        regex=r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+        write_only=True,
+        error_messages={'invalid': ('Password must be at least 8 characters long with at least one capital letter and symbol')})
+    confirm_password = serializers.CharField(write_only=True, required=True)
+    
+    

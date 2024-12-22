@@ -1,12 +1,12 @@
 from rest_framework import generics
-from .serializers import RegistrationSerializer,CustomAuthTokenSerializer,CustomTokenObtainPairSerializer,ChangePasswordSerialier,ActivationResendSerializer
+from .serializers import ResetPasswordRequestSerializer,ResetPasswordSerializer,RegistrationSerializer,CustomAuthTokenSerializer,CustomTokenObtainPairSerializer,ChangePasswordSerialier,ActivationResendSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import Serializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 from ..utils import EmailThread
@@ -14,7 +14,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
 from django.conf import settings
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from accounts.models import PasswordReset
 
 from rest_framework.views import APIView
 from mail_templated import EmailMessage
@@ -24,20 +26,7 @@ from rest_framework.authtoken.models import Token
 
 
 class RegistrationApiView(generics.GenericAPIView):
-
-    """    serializer_class = RegistrationSerializer
-    
-    def post(self,request,*args,**kwargs):
-        serializer = RegistrationSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            data = {
-                "username" : serializer.validated_data["username"]
-                
-            }
-            return Response(data,status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)"""
-        
+ 
     serializer_class = RegistrationSerializer
 
     def post(self, request, *args, **kwargs):
@@ -120,7 +109,7 @@ class ChangePasswordApiView(generics.GenericAPIView):
 
 class TestEmailSend(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
-        self.email = "sareh_ir@yahoo.com"
+        self.email = "ali@ali.com"
         user_obj = get_object_or_404(User, email=self.email)
         token = self.get_tokens_for_user(user_obj)
         email_obj = EmailMessage(
@@ -131,6 +120,10 @@ class TestEmailSend(generics.GenericAPIView):
         )
         EmailThread(email_obj).start()
         return Response("email sent")
+    
+    def get_tokens_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
     
     
     
@@ -183,3 +176,80 @@ class ActivationResendApiView(generics.GenericAPIView):
     def get_tokens_for_user(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
+    
+    
+"""class ResetPassword(generics.GenericAPIView):
+    serializer_class = ResetPasswordSerializer
+    def post(self,request):
+        data = {'request':request, "data":request.data}
+        Serializer=self.serializer_class(data=data)
+        Serializer.is_valid(raise_exception=True)
+        
+        
+class ResetPasswordTokenCheck(generics.GenericAPIView):
+    def get(self,request,uidb64,token):
+        pass"""
+
+class RequestPasswordReset(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = ResetPasswordRequestSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        email = request.data['email']
+        user = User.objects.filter(email__iexact=email).first()
+
+        if user:
+            
+            token =PasswordResetTokenGenerator().make_token(user) 
+            reset = PasswordReset(email=email, token=token)
+            reset.save()
+
+            reset_url = "http://127.0.0.1:8005/accounts/api/v1/password-reset/"+ token
+            
+            email_obj = EmailMessage(
+                "email/resetPassword_email.tpl",
+                {"reset_url": reset_url},
+                "admin@admin.com",
+                to=[email],
+            )
+            EmailThread(email_obj).start()
+
+            # Sending reset link via email (commented out for clarity)
+            # ... (email sending code)
+
+            return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "User with credentials not found"}, status=status.HTTP_404_NOT_FOUND)
+
+class ResetPassword(generics.GenericAPIView):
+    serializer_class = ResetPasswordSerializer
+    permission_classes = []
+
+    def post(self, request, token):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        
+        new_password = data['new_password']
+        confirm_password = data['confirm_password']
+        
+        if new_password != confirm_password:
+            return Response({"error": "Passwords do not match"}, status=400)
+        
+        reset_obj = PasswordReset.objects.filter(token=token).first()
+        
+        if not reset_obj:
+            return Response({'error':'Invalid token'}, status=400)
+        
+        user = User.objects.filter(email=reset_obj.email).first()
+        
+        if user:
+            user.set_password(request.data['new_password'])
+            user.save()
+            
+            reset_obj.delete()
+            
+            return Response({'success':'Password updated'})
+        else: 
+            return Response({'error':'No user found'}, status=404)
