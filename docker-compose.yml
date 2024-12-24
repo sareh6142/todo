@@ -10,7 +10,7 @@ services:
       - "8005:8000"
     environment:
       - SECRET_KEY=test
-      - DEBUG=True
+      - DEBUG=False
 
   smtp4dev:
     image: rnwood/smtp4dev:v3

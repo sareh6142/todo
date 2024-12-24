@@ -7,3 +7,6 @@ django-filter
 django-mail-templated
 drf-yasg[validation]
 djangorestframework-simplejwt
+
+pytest
+pytest-django
