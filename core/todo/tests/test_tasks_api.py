@@ -86,4 +86,23 @@ class TestTaskApi:
         assert response.status_code == 201
         
        
+    def test_put6_Taskdetail_response_200_status(self,api_client,common_task,common_user):
         
+        task = common_task
+        url2 = reverse("todo:api-v1:task-detail", kwargs = {"pk": task.id})
+        data = {
+                "title" : "salam4",
+                "description" : "salam3",
+                "complete" : True,
+        }
+        api_client.force_authenticate(user=task.user)
+        response = api_client.put(url2,data)
+        assert response.status_code == 200
+
+    def test_delete7_Taskdetail_response_200_status(self,api_client,common_task,common_user):
+        
+        task = common_task
+        url2 = reverse("todo:api-v1:task-detail", kwargs = {"pk": task.id})
+        api_client.force_authenticate(user=task.user)
+        response = api_client.delete(url2)
+        assert response.status_code == 204

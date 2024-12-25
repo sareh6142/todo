@@ -59,10 +59,10 @@
     {% for tasks in task %}
     <tr>
         <td>{{ tasks.id }}  -  {{tasks.title}}</td>
-        <td><a href="{% url 'tasks-detail' tasks.id %}">View</a></td>
-        <td><a href="{% url 'task-create' %}">Add</a></td>
-        <td><a href="{% url 'tasks-update' tasks.id %}">update</a></td>
-        <td><a href="{% url 'tasks-delete' tasks.id %}">Delete</a></td>
+        <td><a href="{% url 'todo:tasks-detail' tasks.id %}">View</a></td>
+        <td><a href="{% url 'todo:task-create' %}">Add</a></td>
+        <td><a href="{% url 'todo:tasks-update' tasks.id %}">update</a></td>
+        <td><a href="{% url 'todo:tasks-delete' tasks.id %}">Delete</a></td>
 
     </tr>
     {% empty %}
