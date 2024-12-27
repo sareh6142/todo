@@ -15,7 +15,11 @@ class Task(models.Model):
     
     def get_absolute_api_url(self):
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         return reverse("todo:api-v1:task-detail", kwargs={"pk": self.pk})
+=======
+        return reverse("api-v1:task-detail", kwargs={"pk": self.pk})
+>>>>>>> Stashed changes
 =======
         return reverse("api-v1:task-detail", kwargs={"pk": self.pk})
 >>>>>>> Stashed changes

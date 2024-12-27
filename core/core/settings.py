@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'todo',
     'rest_framework',
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "rest_framework.authtoken",
     "drf_yasg",
     "django_filters",
@@ -50,6 +51,10 @@ INSTALLED_APPS = [
     
 
 
+=======
+    "drf_yasg",
+    "django_filters"
+>>>>>>> Stashed changes
 =======
     "drf_yasg",
     "django_filters"
@@ -156,6 +161,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 LOGIN_URL ='todo:login'
 
 REST_FRAMEWORK = {
@@ -176,6 +182,9 @@ EMAIL_HOST = "smtp4dev"
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 25
+=======
+LOGIN_URL ='login'
+>>>>>>> Stashed changes
 =======
 LOGIN_URL ='login'
 >>>>>>> Stashed changes

@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+\
+>>>>>>> Stashed changes
 =======
 \
 >>>>>>> Stashed changes
