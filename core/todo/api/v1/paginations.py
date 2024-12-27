@@ -16,4 +16,8 @@ class DefaultPagination(PageNumberPagination):
                 "total_pages": self.page.paginator.num_pages,
                 "results": data,
             }
+<<<<<<< Updated upstream
         )
+=======
+        )
+>>>>>>> Stashed changes

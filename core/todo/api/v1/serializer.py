@@ -3,7 +3,11 @@ from ...models import Task
 from django.contrib.auth.models import User
 
 
+<<<<<<< Updated upstream
 
+=======
+\
+>>>>>>> Stashed changes
 
 class UserSerializer(serializers.ModelSerializer):
 

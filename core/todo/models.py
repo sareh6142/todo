@@ -14,7 +14,11 @@ class Task(models.Model):
         return self.title
     
     def get_absolute_api_url(self):
+<<<<<<< Updated upstream
         return reverse("todo:api-v1:task-detail", kwargs={"pk": self.pk})
+=======
+        return reverse("api-v1:task-detail", kwargs={"pk": self.pk})
+>>>>>>> Stashed changes
 
     class Meta:
         ordering = ['complete']
