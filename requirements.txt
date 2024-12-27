@@ -5,7 +5,6 @@ djangorestframework
 markdown
 django-filter
 Faker
-=======
 django-mail-templated
 drf-yasg[validation]
 djangorestframework-simplejwt
