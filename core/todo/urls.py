@@ -5,7 +5,11 @@ from . import views
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 app_name = 'todo'
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes

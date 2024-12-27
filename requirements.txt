@@ -6,6 +6,7 @@ djangorestframework
 markdown
 django-filter
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 drf-yasg[validation]
 djangorestframework-simplejwt
 djoser
@@ -22,6 +23,9 @@ black
 pytest
 pytest-django
 Faker
+=======
+drf-yasg[validation]
+>>>>>>> Stashed changes
 =======
 drf-yasg[validation]
 >>>>>>> Stashed changes
