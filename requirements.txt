@@ -2,11 +2,8 @@ Django==5.1.1
 python-decouple
 pillow
 djangorestframework
-
-markdown
-django-filter
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+markdown       
+django-filter  
 drf-yasg[validation]
 djangorestframework-simplejwt
 djoser
@@ -20,12 +17,7 @@ django-mail-templated
 
 # refactoring and tests
 black
+flake8
 pytest
 pytest-django
 Faker
-=======
-drf-yasg[validation]
->>>>>>> Stashed changes
-=======
-drf-yasg[validation]
->>>>>>> Stashed changes
