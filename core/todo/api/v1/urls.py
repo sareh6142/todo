@@ -1,13 +1,10 @@
-
-from django.urls import path,include
-#from  django.contrib.auth.views import LogoutView
+from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter
 
 app_name = "api-v1"
 
-urlpatterns = [
+router = DefaultRouter()
+router.register("task", views.TaskModelViewSet, basename="task")
 
-
-    
-    
-]
+urlpatterns = router.urls

@@ -1,0 +1,25 @@
+name: todo-test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: install docker-compose
+      run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    - name: permissions
+      run: sudo chmod +x /usr/local/bin/docker-compose  
+    - name: Build the Docker image
+      run: docker-compose up -d
+    - name: testing
+      run: docker exec todoapp sh -c "pytest ."
+      
