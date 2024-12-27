@@ -4,7 +4,6 @@ pillow
 djangorestframework
 markdown
 django-filter
-<<<<<<< HEAD
 Faker
 =======
 django-mail-templated
@@ -13,4 +12,4 @@ djangorestframework-simplejwt
 
 pytest
 pytest-django
->>>>>>> da52e6070683f875ca6a6035cd4ef07b573c9c3f
+
