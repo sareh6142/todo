@@ -2,23 +2,13 @@ Django==5.1.1
 python-decouple
 pillow
 djangorestframework
-markdown       
-django-filter  
+markdown
+django-filter
+Faker
+django-mail-templated
 drf-yasg[validation]
 djangorestframework-simplejwt
-djoser
-django-cors-headers
 
-# deployment module
-gunicorn
-
-# email third party modules
-django-mail-templated
-
-# refactoring and tests
-black
-flake8
 pytest
 pytest-django
-Faker
-#test
+
