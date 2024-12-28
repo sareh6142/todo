@@ -46,8 +46,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "mail_templated",
     "accounts",
-    "drf_yasg",
-    "django_filters",
+    
     
     
     
