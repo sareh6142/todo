@@ -3,19 +3,8 @@ from django.urls import path,include
 #from  django.contrib.auth.views import LogoutView
 from . import views
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 app_name = 'todo'
-=======
 
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
 
 urlpatterns = [
     path('',TaskList.as_view(),name='task'),
