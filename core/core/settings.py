@@ -169,4 +169,4 @@ EMAIL_PORT = 25
 
 
 # celery configs
-CELERY_BROKER_URL = "redis://redis:6379/1"
+#CELERY_BROKER_URL = "redis://redis:6379/1"

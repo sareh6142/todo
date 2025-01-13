@@ -2,21 +2,6 @@ from rest_framework import serializers
 from ...models import Task
 from django.contrib.auth.models import User
 
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
-\
->>>>>>> Stashed changes
-=======
-\
->>>>>>> Stashed changes
-=======
-\
->>>>>>> Stashed changes
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
