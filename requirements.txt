@@ -11,5 +11,7 @@ djangorestframework-simplejwt
 
 pytest
 pytest-django
+celery
+redis
 
 
