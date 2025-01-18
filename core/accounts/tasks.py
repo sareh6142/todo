@@ -9,7 +9,7 @@ def import_django_instance():
     """
     import django
     import os
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Project.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
     django.setup()
 
 
