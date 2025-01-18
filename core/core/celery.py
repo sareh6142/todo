@@ -1,7 +1,9 @@
+
 import os
 
 from celery import Celery
 from accounts.tasks import sendEmail,clean
+#from django_celery_beat.models import PeriodicTask
 
 
 # Set the default Django settings module for the 'celery' program.
@@ -24,8 +26,10 @@ app.autodiscover_tasks()
 def setup_periodic_tasks(sender,**kwargs):
     sender.add_periodic_task(10.0,sendEmail.s(),name="send 10 seconds")
     
-    
+
+
+  
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender,**kwargs):
-    sender.add_periodic_task(600.0,clean.s(),name="check 600 seconds")
+    sender.add_periodic_task(60.0,clean.s(),name="check 600 seconds")
     

@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import accounts.tasks
+#import accounts.tasks
+#from accounts import views
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -173,3 +176,11 @@ EMAIL_PORT = 25
 
 # celery configs
 CELERY_BROKER_URL = "redis://redis:6379/1"
+"""CELERY_BEAT_SCHEDULER ={
+    'clean' :{
+        "task" : "accounts.tasks.clean",
+        "schedule": 600
+        
+    } 
+    
+}"""
