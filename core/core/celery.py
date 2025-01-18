@@ -24,7 +24,7 @@ app.autodiscover_tasks()
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender,**kwargs):
-    sender.add_periodic_task(10.0,sendEmail.s(),name="send 10 seconds")
+    sender.add_periodic_task(20.0,sendEmail.s(),name="send 20 seconds")
     
 
 

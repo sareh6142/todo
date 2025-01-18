@@ -179,7 +179,7 @@ CELERY_BROKER_URL = "redis://redis:6379/1"
 """CELERY_BEAT_SCHEDULER ={
     'clean' :{
         "task" : "accounts.tasks.clean",
-        "schedule": 600
+        "schedule": 60
         
     } 
     
