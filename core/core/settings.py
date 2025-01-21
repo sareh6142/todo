@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
-import accounts.tasks
+import os
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
+
 #import accounts.tasks
 #from accounts import views
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,8 +33,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY",default="test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG",cast=bool,default=False)
-
+DEBUG = True
+#config("DEBUG",cast=bool,default=False)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')],default="*")
 
 
@@ -39,12 +42,12 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.spl
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     'todo',
     'rest_framework',
     "rest_framework.authtoken",
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
     "mail_templated",
     "accounts",
     "django_celery_beat",
+    "requests",
 
     
 ]
@@ -142,8 +146,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
+    
 ]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -176,6 +180,7 @@ EMAIL_PORT = 25
 
 # celery configs
 CELERY_BROKER_URL = "redis://redis:6379/1"
+
 """CELERY_BEAT_SCHEDULER ={
     'clean' :{
         "task" : "accounts.tasks.clean",
@@ -184,3 +189,14 @@ CELERY_BROKER_URL = "redis://redis:6379/1"
     } 
     
 }"""
+
+#caching
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}

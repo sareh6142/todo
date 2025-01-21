@@ -10,6 +10,11 @@ from django.contrib.auth import login,logout
 from .models import Task
 from django.urls import reverse_lazy
 
+from django.http import JsonResponse
+import requests
+from .redis import Cache
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 class TaskList(LoginRequiredMixin,ListView):
@@ -84,3 +89,10 @@ class RegisterPage(FormView):
         if self.request.user.is_authenticated:
             return redirect('task')
         return super(RegisterPage, self).get(*args, *kwargs)
+
+#@Cache.cache_api_response()
+def weather(request, city):
+    url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid=4bc7e7e4dbfd74ec7d7c3b851c5e9542".format(city)
+    response = requests.get(url)
+    data = response.json()
+    return JsonResponse(data)

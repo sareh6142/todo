@@ -16,7 +16,9 @@ urlpatterns = [
     #path('logout/', LogoutView.as_view(next_page='login'), name="logout"),
     path('logout/', views.logout_view , name ='logout'),
     path('register/', RegisterPage.as_view(), name="register"),
-    path('api/v1/',include('todo.api.v1.urls'))
+    path('api/v1/',include('todo.api.v1.urls')),
+    path('weather/<str:city>/', views.weather),
+
 
     
     

@@ -20,6 +20,9 @@ from .serializer import TaskSerializer
 from ...models import Task
 from .permissions import IsOwnerOrReadOnly
 
+
+
+
 class TaskModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = TaskSerializer
@@ -29,4 +32,6 @@ class TaskModelViewSet(viewsets.ModelViewSet):
     search_fields = ["title", "description"]
     ordering_fields = ["created"]
     pagination_class = DefaultPagination
+    
+
     

@@ -41,6 +41,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('',include("todo.urls")),
     path('accounts/',include("accounts.urls")),
     path('api-auth/',include('rest_framework.urls')),
@@ -65,3 +66,4 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
