@@ -28,7 +28,7 @@ def clean():
 
     Task = PeriodicTask.objects.all()
     for task in Task:
-        if task.totol_run_count != 0:
+        if task.total_run_count != 0:
             #id = task.id
             #revoke(id, terminate=True, signal="KILL")
             task.delete()
