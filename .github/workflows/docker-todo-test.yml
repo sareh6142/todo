@@ -9,6 +9,7 @@ on:
 jobs:
 
   build:
+    name : Test
 
     runs-on: ubuntu-latest
 
@@ -22,4 +23,24 @@ jobs:
       run: docker-compose up -d
     - name: testing
       run: docker exec todoapp sh -c "pytest ."
-      
+
+
+    Deploy:
+      if: ${{ always() && contains(join(needs.*.result, ','), 'success') }} 
+      name: Deploy
+      needs: Test
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: Connect and Execute Commands
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+          host: ${{secrets.HOST}}
+          port: ${{secrets.PORT}}
+          script: |
+            cd ${{secrets.PROJECT_PATH}}
+            docker-compose -f docker-compose-stage.yml stop
+            git pull
+            docker-compose -f docker-compose-stage.yml restart      
