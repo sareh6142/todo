@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  Test:
     name : Test
 
     runs-on: ubuntu-latest
@@ -25,16 +25,16 @@ jobs:
       run: docker exec todoapp sh -c "pytest ."
 
 
-    Deploy:
-      if: ${{ always() && contains(join(needs.*.result, ','), 'success') }} 
-      name: Deploy
-      needs: Test
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v3
-      - name: Connect and Execute Commands
-        uses: appleboy/ssh-action@master
-        with:
+  Deploy:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }} 
+    name: Deploy
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Connect and Execute Commands
+      uses: appleboy/ssh-action@master
+      with:
           username: ${{secrets.USERNAME}}
           password: ${{secrets.PASSWORD}}
           host: ${{secrets.HOST}}
