@@ -40,7 +40,6 @@ jobs:
           host: ${{secrets.HOST}}
           port: ${{secrets.PORT}}
           script: |
-            sudo -i
             cd ${{secrets.PROJECT_PATH}}
             docker-compose -f docker-compose-stage.yml stop
             git pull
