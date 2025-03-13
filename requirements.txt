@@ -14,5 +14,5 @@ pytest-django
 celery
 redis
 django-celery-beat
-
-
+gunicorn
+psycopg2-binary
