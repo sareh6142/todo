@@ -35,12 +35,11 @@ jobs:
     - name: Connect and Execute Commands
       uses: appleboy/ssh-action@master
       with:
-          username: ${{secrets.SSH_USER}}
+          username: ${{secrets.USERNAME}}
           password: ${{secrets.PASSWORD}}
           host: ${{secrets.HOST}}
           port: ${{secrets.PORT}}
           script: |
-            sudo -i
             cd ${{secrets.PROJECT_PATH}}
             docker-compose -f docker-compose-stage.yml stop
             git pull
